@@ -4,6 +4,7 @@
 *.dll
 *.so
 *.dylib
+akamai-cli-users
 
 # Test binary, build with `go test -c`
 *.test
