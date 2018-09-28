@@ -9,6 +9,8 @@ import (
 
 	"github.com/fatih/color"
 	"github.com/urfave/cli"
+
+	common "github.com/apiheat/akamai-cli-common"
 )
 
 func cmdUsers(c *cli.Context) error {
@@ -29,10 +31,10 @@ func listUsers(c *cli.Context) error {
 	}
 
 	result, err := userRespParse(data)
-	errorCheck(err)
+	common.ErrorCheck(err)
 
 	if raw {
-		printJSON(result)
+		common.OutputJSON(result)
 		return nil
 	}
 
