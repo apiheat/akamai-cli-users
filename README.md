@@ -49,33 +49,11 @@ COMMANDS:
      help, h   Shows a list of commands or help for one command
 
 GLOBAL OPTIONS:
-   --config FILE, -c FILE   Location of the credentials FILE (default: [$AKAMAI_EDGERC])
-   --debug                  Debug info
-   --no-color               Disable color output
-   --raw                    Show raw output. It will be JSON format
+   --config FILE, -c FILE   Location of the credentials FILE (default: "/Users/USER_NAME/.edgerc") [$AKAMAI_EDGERC_CONFIG]
+   --debug value            Debug Level [$AKAMAI_EDGERC_DEBUGLEVEL]
    --section NAME, -s NAME  NAME of section to use from credentials file (default: "default") [$AKAMAI_EDGERC_SECTION]
    --help, -h               show help
    --version, -v            print the version
-```
-
-### Raw output. (JSON)
-Any command can run with `--raw` parameter. Output will be as received from Akamai in JSON format
-
-```shell
-akamai users --section custom-name --raw list users
-[
-  {
-    "uiIdentityId": "...",
-    "firstName": "Name",
-    "lastName": "LastName",
-    "uiUserName": "a@a.com",
-    "email": "bas.grabowsky@ing.nl",
-    "accountId": "...",
-    "lastLoginDate": "...",
-    "tfaEnabled": true,
-    "tfaConfigured": true
-  }
-]
 ```
 
 ### List commands
@@ -88,6 +66,7 @@ There are 2 types of output:
 
 * markdown (default)
 * table
+* json
 
 To specify desired output, please use `--output` key
 

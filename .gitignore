@@ -15,3 +15,5 @@ akamai-cli-users
 # goreleaser
 dist/
 build/
+
+vendor/
