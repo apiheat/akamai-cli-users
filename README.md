@@ -1,22 +1,20 @@
 # Akamai CLI for Users Audit
-*NOTE:* This tool is intended to be installed via the Akamai CLI package manager, which can be retrieved from the releases page of the [Akamai CLI](https://github.com/akamai/cli) tool.
 
-### Local Install, if you choose not to use the akamai package manager
-If you want to compile it from source, you will need Go 1.9 or later, and the [Glide](https://glide.sh) package manager installed:
-1. Fetch the package:
-   `go get https://github.com/partamonov/akamai-cli-users`
-1. Change to the package directory:
-   `cd $GOPATH/src/github.com/partamonov/akamai-cli-users`
-1. Install dependencies using Glide:
-   `glide install`
-1. Compile the binary:
-   `go build -ldflags="-s -w -X main.version=X.X.X" -o akamai-users`
+This tool will give you users overview in your account
+
+Should you miss something we *gladly accept patches* :)
+
+CLI uses custom [Akamai API client](https://github.com/apiheat/go-edgegrid)
+
+## Configuration & Installation
 
 ### Credentials
-In order to use this configuration, you need to:
-* Set up your credential files as described in the [authorization](https://developer.akamai.com/introduction/Prov_Creds.html) and [credentials](https://developer.akamai.com/introduction/Conf_Client.html) sections of the getting started guide on developer.akamai.com.
 
-Expects `default` section in .edgerc, can be changed via --section parameter
+Set up your credential files as described in the [authorization](https://developer.akamai.com/introduction/Prov_Creds.html) and [credentials](https://developer.akamai.com/introduction/Conf_Client.html) sections of the getting started guide on developer.akamai.com.
+
+Tools expect proper format of sections in edgerc file which example is shown below
+
+*NOTE:* Default file location is *~/.edgerc*
 
 ```
 [default]
@@ -26,19 +24,45 @@ access_token = XXXXXXXXXXXX
 client_token = XXXXXXXXXXXX
 ```
 
-## Overview
-The Akamai Users will give you users overview in your account
+In order to change section which is being actively used you can
 
-## Main Command Usage
+* change it via `--config parameter` of the tool itself
+* change it via env variable `export AKAMAI_EDGERC_CONFIG=/Users/jsmitsh/.edgerc`
+
+In order to change section which is being actively used you can
+
+* change it via `--section parameter` of the tool itself
+* change it via env variable `export AKAMAI_EDGERC_SECTION=mycustomsection`
+
+> *NOTE:* Make sure your API client do have appropriate scopes enabled
+
+### Installation
+
+The tool can be used as a stand-alone binary or in conjuction with [Akamai CLI](https://developer.akamai.com/cli).
+
+#### Akamai-cli ( recommended )
+
+Execute the following from console
+
+```shell
+> akamai install https://github.com/apiheat/akamai-cli-reporting
+```
+
+#### Stand-alone
+
+As part of automated releases/builds you can download latest version from the project release page
+
+## Usage
+
 ```shell
 NAME:
-   akamai users - A CLI to interact with Akamai Identity Management
+   akamai-cli-users - A CLI to interact with Akamai Identity Management
 
 USAGE:
-   akamai users [global options] command [command options] [arguments...]
+   akamai-cli-users [global options] command [command options] [arguments...]
 
 VERSION:
-   0.0.1
+   X.X.X
 
 AUTHORS:
    Petr Artamonov
@@ -49,7 +73,7 @@ COMMANDS:
      help, h   Shows a list of commands or help for one command
 
 GLOBAL OPTIONS:
-   --config FILE, -c FILE   Location of the credentials FILE (default: "/Users/USER_NAME/.edgerc") [$AKAMAI_EDGERC_CONFIG]
+   --config FILE, -c FILE   Location of the credentials FILE (default: "/Users/partamonov/.edgerc") [$AKAMAI_EDGERC_CONFIG]
    --debug value            Debug Level [$AKAMAI_EDGERC_DEBUGLEVEL]
    --section NAME, -s NAME  NAME of section to use from credentials file (default: "default") [$AKAMAI_EDGERC_SECTION]
    --help, -h               show help
@@ -71,6 +95,25 @@ There are 2 types of output:
 To specify desired output, please use `--output` key
 
 ```shell
-> akamai users list users --output table
+> akamai users list users --output [table|json|markdown]
 ...
 ```
+
+## Development
+
+In order to develop the tool with us do the following:
+
+1. Fork repository
+1. Clone it to your folder ( within *GO* path )
+1. Ensure you can restore dependencies by running
+
+   ```shell
+   dep ensure
+   ```
+
+1. Make necessary changes
+1. Make sure solution builds properly ( feel free to add tests )
+
+   ```shell
+   go build -ldflags="-s -w -X main.appVer=1.2.3 -X main.appName=$(basename `pwd`)"
+   ```
