@@ -5,7 +5,7 @@
   "commands": [
     {
       "name": "users",
-      "version": "0.0.4",
+      "version": "3.0.0",
       "description": "Users management",
       "bin": "https://github.com/apiheat/akamai-cli-users/releases/download/v{{.Version}}/akamai-cli-{{.Name}}_{{.OS}}_{{.Arch}}{{.BinSuffix}}"
     }
